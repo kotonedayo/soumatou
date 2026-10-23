@@ -1,0 +1,1998 @@
+/* ========================================
+   走馬灯：カラーパレット
+======================================== */
+
+/* ========================================
+   走馬灯：カラーパレット
+   色の変更は基本的にここで管理
+======================================== */
+
+:root {
+
+    /* ====================================
+       基本の背景色
+    ==================================== */
+
+    --color-bg: #faf9f6;
+    --color-bg-summer: #f0ece3;
+    --color-bg-dark: #1c2530;
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    /* チェキの紙 */
+    --color-polaroid: #fffdf8;
+
+    /* ORANGE：背景色の変化 */
+--color-orange-cream: #f2e5d8;
+--color-orange-white: #faf7f2;
+
+
+    /* ====================================
+       文字色
+    ==================================== */
+
+    --color-text: #333333;
+    --color-text-light: #ffffff;
+    --color-text-muted: #888888;
+    --color-logo: #474545;
+
+
+    /* ====================================
+       アクセントカラー
+    ==================================== */
+
+    /* 最後の赤いロゴ */
+    --color-accent: #f10c08;
+
+    /* ORANGEの光 */
+    --color-orange: #f7e1ca;
+
+
+    /* ====================================
+       MIDORI：緑の記憶
+    ==================================== */
+
+    --color-green-1: #e7eee3;
+    --color-green-2: #b8c9b1;
+    --color-green-3: #667e68;
+    --color-green-4: #293d32;
+    --color-green-5: #040605;
+
+    /* MIDORIのタイトル */
+    --color-green-text: #34483b;
+
+
+    /* ====================================
+       KURO：暗闇と蛍光灯
+    ==================================== */
+
+    --color-kuro-text: #f5f8ff;
+
+    /* 蛍光灯の光 */
+    --color-kuro-glow-1: rgba(255, 255, 255, 0.8);
+    --color-kuro-glow-2: rgba(190, 220, 255, 0.5);
+    --color-kuro-glow-3: rgba(150, 200, 255, 0.2);
+
+
+    /* ====================================
+       KURO → ORANGE：光のにじみ
+    ==================================== */
+
+    --color-light-glow-1: rgba(193, 141, 105, 0.85);
+    --color-light-glow-2: rgba(113, 70, 49, 0.45);
+    --color-light-glow-transparent: rgba(0, 0, 0, 0);
+
+
+    /* ====================================
+       影
+    ==================================== */
+
+    --color-shadow: rgba(0, 0, 0, 0.12);
+
+}
+/* ページ全体 */
+
+body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: serif;
+}
+
+/* オープニング画面 */
+
+.opening {
+    min-height: 100vh;
+    min-height: 100svh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+}
+
+/* 中央の文字グループ */
+
+.opening-content {
+    text-align: center;
+}
+
+/* 英語の小さな文字 */
+
+.opening-label {
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    margin-bottom: 40px;
+    color: var(--color-text-muted);
+    padding-right: 0.35em;
+}
+
+/* メインタイトル */
+
+.opening-title {
+    font-size: clamp(48px, 10vw, 100px);
+    font-weight: normal;
+    letter-spacing: 0.25em;
+    margin: 0;
+}
+
+/* キャッチコピー */
+
+.opening-copy {
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    margin-top: 40px;
+}
+
+/* 下のスクロール案内 */
+
+.scroll-guide {
+    position: absolute;
+    bottom: 35px;
+
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--color-text-muted);
+}
+/* 走馬灯ロゴ */
+
+.logo-container {
+    width: 45%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.logo-container svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* 記憶の始まり */
+
+.memory-start {
+    width: 100%;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.memory-start img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* 夏の写真を最初は透明にする */
+
+.memory-start img {
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1.5s ease, transform 2s ease;
+}
+
+/* 表示するタイミングで付けるクラス */
+
+.memory-start.is-visible img {
+    opacity: 1;
+    transform: scale(1);
+}
+/* 写真の上に文字を配置する */
+
+.memory-start {
+    position: relative;
+}
+
+.memory-number {
+    position: absolute;
+    left: 40px;
+    bottom: 30px;
+
+    margin: 0;
+    color: var(--color-bg);
+
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+}
+/* 横に並ぶ記憶の写真 */
+
+.memory-gallery {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 100px 0;
+    background-color: var(--color-bg);
+
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+}
+
+.memory-track {
+    display: flex;
+    gap: 24px;
+
+    padding-left: 50px;
+    padding-right: 50px;
+
+    width: max-content;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   MEMORY：写真サイズ
+======================================== */
+
+.memory-track img {
+    width: 700px;
+    height: 450px;
+
+    flex-shrink: 0;
+
+    /* 写真を切り取ってサイズを統一 */
+    object-fit: cover;
+    object-position: center;
+}
+
+/* ========================================
+   スマホ用
+======================================== */
+
+@media (max-width: 767px) {
+    .memory-track img {
+        width: 75vw;
+        height: auto;
+        aspect-ratio: 7 / 4.5;
+        object-fit: cover;
+    }
+}
+/* カルーセルの案内 */
+
+.gallery-guide {
+    margin: 80px 40px -60px;
+
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--color-text-muted);
+}
+/* メニューバー */
+
+.site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 80px;
+    padding: 0 40px;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: var(--color-bg);
+    backdrop-filter: blur(10px);
+
+    z-index: 1000;
+    transition: height 0.5s ease;
+}
+
+.header-logo {
+    font-size: 15px;
+    letter-spacing: 0.2em;
+    color: var(--color-text);
+    text-decoration: none;
+}
+
+.header-nav {
+    display: flex;
+    gap: 32px;
+}
+
+.header-nav a {
+    font-family: Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--color-text);
+    text-decoration: none;
+}
+/* スクロール後のメニューバー */
+
+.site-header.is-small {
+    height: 48px;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+/* ========================================
+   夏の記憶
+======================================== */
+
+.summer-section {
+    width: 100%;
+    padding: 0 0 160px;
+
+    /* 夏の記憶：淡いクリーム色 */
+    background-color: var(--color-bg-summer);
+
+    /* 横にはみ出した部分を隠す */
+    overflow-x: clip;
+    padding-bottom: 25vh;
+}
+
+/* ----------------------------------------
+   写真の共通設定
+---------------------------------------- */
+
+.summer-scene {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.summer-scene img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ----------------------------------------
+   1枚目：青空と田んぼ
+---------------------------------------- */
+
+.summer-scene-1 {
+    position: relative;
+    width: 100%;
+    height: 100svh;
+    overflow: hidden;
+}
+
+.summer-scene-1 img {
+    width: 100%;
+    height: 70svh;
+    object-fit: cover;
+
+    opacity: 0;
+    transform: scale(1.05);
+
+    transition:
+        opacity 1.5s ease,
+        transform 2s ease;
+}
+
+.summer-scene-1.is-visible img {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* 写真を枠いっぱいに表示 */
+
+.memory-start img,
+
+.summer-scene-1 img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+}
+/* ========================================
+
+   スマホ用
+
+======================================== */
+
+@media (max-width: 767px) {
+
+    .memory-start,
+
+    .summer-scene-1 {
+
+        height: 50svh;
+
+    }
+    .summer-section {
+
+        padding-bottom: 40svh;
+
+    }
+
+}
+
+/* 写真の上の文字 */
+.summer-number {
+    position: absolute;
+    left: 40px;
+    bottom: 30px;
+
+    margin: 0;
+    color: var(--color-bg);
+
+    font-family: Arial, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+}
+
+/* ----------------------------------------
+   2〜4枚目：共通アニメーション
+---------------------------------------- */
+
+.summer-scene-2,
+.summer-scene-3,
+.summer-scene-4 {
+    width: 60%;
+     margin: 40px 20px 0px;
+    opacity: 0;
+    position: relative;
+    filter: blur(12px);
+
+    transition:
+        opacity 1.2s ease,
+        filter 1.5s ease,
+        transform 1.2s ease;
+
+    transform: translateX(-60px);
+}
+.summer-scene-2 {
+    margin: 60px 20px 0px;
+}
+
+.summer-scene-2.is-visible,
+.summer-scene-3.is-visible,
+.summer-scene-4.is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+}
+/* ----------------------------------------
+   夏の記憶：縦書きの一文
+---------------------------------------- */
+
+/* 夏の記憶：縦書きの一文 */
+.summer-text {
+    position: absolute;
+
+    /* 写真の右側 */
+    left: calc(100% + clamp(20px, 16vw, 180px));
+    top: 100%;
+
+    transform: translateY(-50%);
+
+    writing-mode: vertical-rl;
+
+    margin: 0;
+    font-size: clamp(15px, 1.5vw, 20px);
+    letter-spacing: 0.25em;
+    line-height: 2;
+    color: var(--color-text);
+
+    white-space: nowrap;
+}
+/* ========================================
+   スマホ用：縦書き文字の位置調整
+======================================== */
+
+@media (max-width: 767px) {
+    .summer-text {
+        top: 130%;
+    }
+}
+/* ========================================
+   夏の記憶：5・6枚目 チェキ風
+======================================== */
+
+.summer-polaroids {
+
+    display: flex;
+
+    flex-direction: row;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 80px; /* 2枚の間隔を広げる */
+
+    padding: 200px 8% 80px;
+
+    box-sizing: border-box;
+
+}
+
+/* ========================================
+   チェキのサイズを統一
+======================================== */
+
+.summer-polaroid {
+    width: min(35%, 300px);
+    margin: 0;
+    padding: 12px 12px 36px;
+    box-sizing: border-box;
+
+    background-color: var(--color-polaroid);
+    box-shadow: 0 8px 25px var(--color-shadow);
+}
+
+.summer-polaroid img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* 5枚目：左に傾ける */
+.summer-polaroid-1 {
+    transform: rotate(-6deg);
+}
+
+/* 6枚目：右に傾ける */
+.summer-polaroid-2 {
+    transform: rotate(4deg);
+}
+
+/* ========================================
+   スマホ：縦並び
+======================================== */
+
+@media (max-width: 767px) {
+
+    .summer-polaroids {
+        flex-direction: column;
+        gap: 40px;
+        padding: 60px 8% 60px;
+    }
+
+    .summer-polaroid {
+        width: 65%;
+        padding: 8px 8px 24px;
+    }
+
+    /* 5枚目：少し左 */
+    .summer-polaroid-1 {
+        transform: translateX(-12%) rotate(-6deg);
+    }
+
+    /* 6枚目：少し右 */
+    .summer-polaroid-2 {
+        transform: translateX(12%) rotate(5deg);
+    }
+}
+/* ========================================
+   チェキ：下に通り過ぎると消える
+======================================== */
+
+/* 最初から表示しておく */
+.summer-polaroid {
+    opacity: 1;
+    filter: blur(0);
+
+    transition:
+        opacity 1.5s ease,
+        filter 1.5s ease;
+}
+
+/* 下にスクロールして通り過ぎたら消える */
+.summer-polaroid.is-hidden {
+    opacity: 0;
+    filter: blur(10px);
+}
+
+/* ========================================
+   03 / MIDORI
+   緑の記憶
+======================================== */
+
+.green-section {
+    width: 100%;
+    overflow: clip;
+
+    background-color: var(--color-green-1);
+
+    transition: background-color 1.8s ease;
+}
+
+.green-section[data-stage="1"] {
+    background-color: var(--color-green-1);
+}
+
+.green-section[data-stage="2"] {
+    background-color: var(--color-green-2);
+}
+
+.green-section[data-stage="3"] {
+    background-color: var(--color-green-3);
+}
+
+.green-section[data-stage="4"] {
+    background-color: var(--color-green-4);
+}
+
+.green-section[data-stage="5"] {
+    background-color: var(--color-green-5);
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+.green-intro {
+    padding-top: 50svh;
+    min-height: calc(180px + 30svh);
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.green-number {
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--color-green-text);
+}
+
+
+/* ========================================
+   写真共通
+======================================== */
+
+.green-scene {
+    width: 100%;
+    min-height: auto;
+
+    display: flex;
+    align-items: center;
+
+    padding: 100px 8%;
+    box-sizing: border-box;
+}
+
+/* 写真は元の比率を維持 */
+.green-scene img {
+    display: block;
+    max-height: 70svh;
+    width: auto;
+    max-width: 100%;
+    object-fit: contain;
+    height: auto;
+
+    opacity: 0;
+    transform: translateY(35px);
+
+    transition:
+        opacity 1.4s ease,
+        transform 1.4s ease;
+}
+
+/* 画面に入ったら写真が現れる */
+.green-scene.is-visible img {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ========================================
+   1枚目：明るい建物と木々
+======================================== */
+
+/* 1枚目：中央配置のままタイトルに近づける */
+.green-scene-1 {
+    min-height: auto;
+    justify-content: center;
+    padding: 70px 8% 100px;
+}
+
+.green-scene-1 img {
+    width: 60%;
+
+    max-width: 650px;
+
+    margin-left: auto;
+
+    margin-right: auto;
+}
+
+/* ========================================
+   2枚目：ガラス張りの建物
+======================================== */
+
+.green-scene-2 {
+    justify-content: flex-end;
+    padding: 80px 8% 100px;
+}
+
+.green-scene-2 img {
+    width: 38%;
+    max-width: 420px;
+}
+
+
+/* ========================================
+   3枚目：緑に囲まれた階段
+======================================== */
+
+.green-scene-3 {
+    justify-content: flex-start;
+}
+
+.green-scene-3 img {
+    width: 35%;
+    max-width: 400px;
+}
+
+
+/* ========================================
+   4枚目：鎖と南京錠
+======================================== */
+
+.green-scene-4 {
+    justify-content: center;
+}
+
+.green-scene-4 img {
+    width: 32%;
+    max-width: 360px;
+}
+
+
+/* ========================================
+   5枚目：暗い階段
+======================================== */
+
+.green-scene-5 {
+    justify-content: flex-start;
+    padding: 200px 8% 100px;
+}
+
+.green-scene-5 img {
+    width: 38%;
+    max-width: 420px;
+}
+
+
+/* ========================================
+   最後の暗闇
+======================================== */
+
+.green-ending {
+    height: 50svh;
+}
+
+
+/* ========================================
+   スマホ対応
+======================================== */
+
+@media (max-width: 767px) {
+
+    
+
+    .green-intro {
+
+        min-height: 120px;
+
+    }
+
+    .green-number {
+        font-size: 11px;
+    }
+
+    .green-scene {
+        min-height: 80svh;
+        padding: 80px 7%;
+    }
+    .green-scene img {
+
+        max-width: none;
+
+    }
+
+    .green-scene-1 {
+
+        min-height: auto;
+
+        padding: 20px 7% 70px;
+
+    }
+
+    .green-scene-1 img {
+        width: 85%;
+    }
+
+    .green-scene-2 img {
+        width: 68%;
+    }
+
+    .green-scene-3 img {
+        width: 70%;
+    }
+
+    .green-scene-4 img {
+        width: 70%;
+    }
+
+    .green-scene-5 img {
+        width: 75%;
+    }
+}
+
+/* ========================================
+   1枚目：はっきりした記憶
+======================================== */
+
+.green-scene-1  {
+    right: 12%;
+    bottom: 15px;
+
+    color: var(--color-green-text);
+    filter: blur(0);
+}
+
+.green-scene-1.is-visible {
+
+    opacity: 1;
+
+    filter: blur(0);
+
+    transform: translateY(0);
+
+}
+
+/* ========================================
+   2枚目：少し曖昧
+======================================== */
+
+.green-scene-2  {
+    left: 15%;
+    top: 50%;
+
+    color: var(--color-green-text);
+    filter: blur(1px);
+}
+
+.green-scene-2.is-visible  {
+
+    opacity: 0.85;
+
+    filter: blur(0.3px);
+
+    transform: translateY(0);
+
+}
+
+/* ========================================
+   3枚目：ぼんやり
+======================================== */
+
+.green-scene-3  {
+    right: 25%;
+
+    color: var(--color-text-light);
+    filter: blur(2px);
+}
+
+.green-scene-3.is-visible {
+    opacity: 0.7;
+
+    filter: blur(0.7px);
+    transform: translateY(0);
+}
+
+/* ========================================
+   4枚目：ほとんど思い出せない
+======================================== */
+
+.green-scene-4  {
+    bottom: -25px;
+    left: 10%;
+    color: var(--color-text-light);
+    filter: blur(3px);
+}
+
+.green-scene-4.is-visible  {
+    opacity: 0.55;
+
+    filter: blur(1px);
+
+    transform: translateY(0);
+}
+
+/* ========================================
+   5枚目：言葉にならない
+======================================== */
+
+.green-scene-5  {
+    right: 20%;
+
+
+    color: var(--color-text-light);
+    filter: blur(4px);
+}
+
+.green-scene-5.is-visible  {
+    opacity: 0.4;
+    filter: blur(1px);
+    transform: translateY(0);
+}
+
+/* ========================================
+   スマホ対応
+======================================== */
+
+@media (max-width: 767px) {
+
+    .green-scene-1  {
+        right: 7%;
+        bottom: 10px;
+    }
+
+    .green-scene-2  {
+        left: 7%;
+        top: auto;
+        bottom: 10px;
+    }
+
+    .green-scene-3 {
+        right: 7%;
+        bottom: 10px;
+    }
+
+    .green-scene-4  {
+        right: 7%;
+        top: auto;
+        bottom: 10px;
+    }
+
+    .green-scene-5  {
+        right: 7%;
+        bottom: 10px;
+    }
+}
+/* ========================================
+   緑の写真：左右の配置を整える
+======================================== */
+
+/* 写真を中央基準にする */
+.green-scene-2,
+.green-scene-3,
+.green-scene-5 {
+    justify-content: center;
+}
+
+/* 2枚目：中央から少し右 */
+.green-scene-2 img {
+    position: relative;
+    left: 50px;
+}
+
+/* 3枚目：中央から少し左 */
+.green-scene-3 img {
+    position: relative;
+    left: -50px;
+}
+
+/* 5枚目：中央 */
+.green-scene-5 img {
+    position: relative;
+    left: -40px;
+}
+
+/* スマホでは左右のずれを小さく */
+@media (max-width: 767px) {
+
+    .green-scene-2 img {
+        left: 15px;
+    }
+
+    .green-scene-3 img {
+        left: -15px;
+    }
+
+    .green-scene-5 img {
+        left: 0;
+    }
+}
+
+/* ========================================
+   04 / KURO
+======================================== */
+
+.kuro-section {
+    width: 100%;
+    background-color: var(--color-black);
+    overflow: clip;
+}
+
+/* ========================================
+   ぼやけた階段の写真
+======================================== */
+
+.kuro-main-photo {
+    width: 100%;
+    min-height: auto;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    padding: 40px 8% 20px;
+    box-sizing: border-box;
+
+    background-color: var(--color-black);;
+}
+
+/* 写真本来のぼけを活かす */
+.kuro-main-photo img {
+    display: block;
+
+    width: auto;
+    height: auto;
+
+    max-width: 70%;
+    max-height: 70svh;
+
+    object-fit: contain;
+
+    opacity: 0;
+    filter: brightness(0.7);
+    transform: translateY(35px) scale(0.97);
+
+    transition:
+        opacity 2.5s ease,
+        filter 2.5s ease,
+        transform 3s ease;
+}
+
+/* 写真が静かに浮かび上がる */
+.kuro-main-photo.is-visible img {
+    opacity: 1;
+    filter: brightness(1.05);
+    transform: translateY(0) scale(1);
+}
+
+/* ========================================
+   章の名前
+======================================== */
+
+.kuro-intro {
+    min-height: 180px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding: 80px 20px 20px;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   04 / KURO：ジジッと消える文字
+======================================== */
+
+.kuro-number {
+    margin: 0;
+
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    color: var(--color-kuro-text);
+
+    opacity: 0;
+    transform: translateY(0);
+
+    text-shadow:
+    0 0 6px var(--color-kuro-glow-1),
+    0 0 18px var(--color-kuro-glow-2),
+    0 0 35px var(--color-kuro-glow-3);
+}
+
+/* 画面に入ったら点滅開始 */
+.kuro-intro.is-visible .kuro-number {
+    animation: kuroFlicker 2.5s linear forwards;
+}
+
+/* 蛍光灯のように点滅して消える */
+@keyframes kuroFlicker {
+
+    /* ゆっくり現れる */
+    0% {
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    /* しばらく光る */
+    40% {
+        opacity: 1;
+    }
+
+    /* ジジッ…… */
+    43% {
+        opacity: 0.15;
+    }
+
+    45% {
+        opacity: 1;
+    }
+
+    47% {
+        opacity: 0.3;
+    }
+
+    49% {
+        opacity: 1;
+    }
+
+    /* 一度安定する */
+    65% {
+        opacity: 1;
+    }
+
+    /* 最後に激しく点滅 */
+    70% {
+        opacity: 0;
+    }
+
+    72% {
+        opacity: 1;
+    }
+
+    74% {
+        opacity: 0.2;
+    }
+
+    76% {
+        opacity: 1;
+    }
+
+    78% {
+        opacity: 0;
+    }
+
+    81% {
+        opacity: 0.8;
+    }
+
+    83% {
+        opacity: 0;
+    }
+
+    /* 完全に消える */
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   スマホ対応
+======================================== */
+
+@media (max-width: 767px) {
+
+    .kuro-intro {
+
+        min-height: 130px;
+
+        padding: 55px 20px 15px;
+
+    
+    }
+
+    .kuro-main-photo {
+    min-height: auto;
+    padding: 40px 5% 50px;
+}
+
+    .kuro-main-photo img {
+        max-width: 100%;
+        max-height: 85svh;
+    }
+
+    .kuro-number {
+        font-size: 11px;
+    }
+}
+/* ========================================
+   KURO：2枚目の写真
+======================================== */
+
+.kuro-scene-2 {
+    width: 100%;
+    min-height: 55svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 8% 60px;
+    box-sizing: border-box;
+
+    background-color: var(--color-black);
+}
+
+.kuro-scene-2 img {
+    display: block;
+
+    width: 65%;
+    max-width: 850px;
+    height: auto;
+
+    position: relative;
+
+    opacity: 0;
+    filter: brightness(0.65);
+    transform: translateY(30px);
+
+    transition:
+        opacity 2.2s ease,
+        filter 2.5s ease,
+        transform 2.5s ease;
+}
+
+/* スクロールすると現れる */
+.kuro-scene-2.is-visible img {
+    opacity: 1;
+    filter: brightness(1);
+    transform: translateY(0);
+}
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 767px) {
+
+    .kuro-scene-2 {
+        min-height: 50svh;
+        padding: 30px 5% 40px;
+    }
+
+    .kuro-scene-2 img {
+        width: 90%;
+        max-width: none;
+        left: 0;
+    }
+}
+/* ========================================
+   KURO → ORANGE
+   黒の中に光がにじんでくる
+======================================== */
+
+/* 演出を見せるスクロール距離 */
+.light-transition {
+    position: relative;
+    height: 160vh;
+    background: var(--color-black);;
+}
+
+/* スクロール中、画面に留まる */
+.light-transition-screen {
+    position: sticky;
+    top: 0;
+
+    width: 100%;
+    height: 100svh;
+
+    overflow: hidden;
+    background: var(--color-black);;
+}
+
+/* 下からにじむ、ぼんやりした光 */
+.light-glow {
+    position: absolute;
+    inset: -30%;
+
+    background: radial-gradient(
+    ellipse 65% 55% at 50% 100%,
+    var(--color-orange) 0%,
+    var(--color-light-glow-1) 28%,
+    var(--color-light-glow-2) 55%,
+    var(--color-light-glow-transparent) 78%
+);
+
+    opacity: 0;
+    transform: scale(0.6);
+
+    will-change: opacity, transform;
+}
+
+/* 最後に画面全体をオレンジに包む */
+.light-warmth {
+    position: absolute;
+    inset: 0;
+
+    background: var(--color-orange);
+
+    opacity: 0;
+
+    will-change: opacity;
+}
+
+/* スマホ */
+@media (max-width: 767px) {
+    .light-transition {
+        height: 170svh;
+    }
+}
+
+/* 動きを減らす設定を使っている人向け */
+@media (prefers-reduced-motion: reduce) {
+    .light-glow {
+        transform: none !important;
+    }
+}
+/* ========================================
+   05 / ORANGE
+   オレンジから白へ戻る記憶
+======================================== */
+
+.orange-section {
+    width: 100%;
+
+    /* 最初は今までと同じオレンジ */
+    background-color: var(--color-orange);
+
+    overflow: clip;
+}
+
+/* 写真の共通設定 */
+.orange-scene {
+    width: 100%;
+    min-height: 90svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 60px 8%;
+    box-sizing: border-box;
+}
+
+/* 写真は切り抜かず、元の比率を保つ */
+.orange-scene img {
+    display: block;
+    width: auto;
+    height: auto;
+
+    max-width: 100%;
+    max-height: 75svh;
+
+    object-fit: contain;
+}
+
+/* 1枚目 */
+.orange-scene-1 {
+    min-height: 100svh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 写真 */
+.orange-scene-1 img {
+    position: relative;
+    z-index: 1;
+}
+
+/* 写真を包む白い光 */
+.orange-whiteout {
+    position: absolute;
+    inset: 0;
+
+    background-color: var(--color-orange-white);
+
+    opacity: 0;
+
+    pointer-events: none;
+    z-index: 2;
+}
+
+.orange-scene-1 img {
+    max-width: 70%;
+    max-height: 80svh;
+}
+
+/* スマホ */
+@media (max-width: 767px) {
+
+    .orange-intro {
+        height: 25svh;
+    }
+
+    .orange-scene {
+        min-height: 80svh;
+        padding: 60px 6%;
+    }
+
+    .orange-scene-1 img {
+        max-width: 90%;
+        max-height: 75svh;
+    }
+}
+/* ========================================
+   走馬灯：ORANGEの背景と一体化
+======================================== */
+
+.flashback-section {
+    position: relative;
+
+    width: 100%;
+    min-height: 100svh;
+
+    /* 親のORANGE背景をそのまま見せる */
+    background: none;
+}
+
+/* ========================================
+   走馬灯：写真を表示する画面
+======================================== */
+
+.flashback-screen {
+    position: relative;
+
+    width: 100%;
+    height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    /* 走馬灯専用の背景色を作らない */
+    background: none;
+}
+
+/* ========================================
+   走馬灯：写真
+======================================== */
+
+.flashback-photo {
+    position: absolute;
+
+    /* 写真の大きさを統一 */
+    width: 90vw;
+    height: 80svh;
+
+    max-width: none;
+    max-height: none;
+
+    /* 縦横の比率が違っても同じ枠に収める */
+    object-fit: cover;
+    object-position: center;
+
+    /* 最初は非表示 */
+    opacity: 0;
+    visibility: hidden;
+
+    /* 一瞬で切り替える */
+    transition: none;
+
+    z-index: 1;
+}
+
+/* ========================================
+   表示中の写真
+======================================== */
+
+.flashback-photo.is-active {
+    opacity: 1;
+    visibility: visible;
+
+    z-index: 2;
+}/* ========================================
+   走馬灯：最初の写真だけふわっと現れる
+======================================== */
+
+/* 最初の写真の登場前 */
+.flashback-photo.is-intro {
+    opacity: 0;
+    filter: blur(12px) brightness(1.35);
+    transform: scale(1.035);
+
+    transition:
+        opacity 1.2s ease,
+        filter 1.5s ease,
+        transform 1.5s ease;
+}
+
+/* 最初の写真が光の中から現れる */
+.flashback-photo.is-intro.is-visible {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transform: scale(1);
+}
+
+/* ========================================
+   最後の白い静寂
+======================================== */
+
+.flashback-white {
+    position: absolute;
+    inset: 0;
+
+    background-color: var(--color-bg-summer);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    /* 写真より上に表示 */
+    z-index: 3;
+
+    transition: none;
+}
+
+/* 走馬灯が終わったら白くする */
+.flashback-section.is-finished .flashback-white {
+    opacity: 1;
+}
+
+/* ========================================
+   スマホ対応
+======================================== */
+
+@media (max-width: 767px) {
+
+    .flashback-photo {
+        width: 94vw;
+        height: 75svh;
+    }
+
+}
+/* ========================================
+   FINAL / 最後の記憶
+======================================== */
+
+.final-section {
+    width: 100%;
+    background: var(--color-bg-summer);
+}
+
+.final-silence {
+    height: 0;
+}
+
+/* ========================================
+   走馬灯：最後の写真
+======================================== */
+
+.flashback-final {
+    position: absolute;
+    inset: 0;
+
+    z-index: 4;
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    background: var(--color-bg-summer);
+}
+
+/* 最後の写真を中央に小さく表示 */
+.flashback-final-image {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 75%;
+    height: auto;
+
+    max-height: 80%;
+    object-fit: contain;
+
+    opacity: 0;
+
+    filter: blur(12px) brightness(1.3);
+
+    transform: translate(-50%, -50%) scale(1.05);
+
+    transition:
+        opacity 1.8s ease,
+        filter 2s ease,
+        transform 2s ease;
+}
+
+/* 最後の画面を表示 */
+.flashback-section.is-final-revealed .flashback-final {
+    opacity: 1;
+    visibility: visible;
+}
+
+.flashback-section.is-final-revealed .flashback-final-image {
+    opacity: 1;
+    filter: blur(0) brightness(1);
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* ========================================
+   FINAL：赤いロゴを右寄せ
+======================================== */
+
+.flashback-final-logo {
+    position: absolute;
+
+    right: 12%;
+    top: 50%;
+
+    width: min(28vw, 260px);
+
+    transform: translateY(-50%);
+
+    z-index: 5;
+
+    pointer-events: none;
+}
+
+/* ロゴの線 */
+.final-logo-strokes line,
+.final-logo-strokes path {
+    fill: none;
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* ロゴの丸 */
+.final-logo-dots circle {
+    fill: var(--color-accent);
+}
+
+.flashback-final-logo svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+}
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 767px) {
+
+    .flashback-final-logo {
+        right: 8%;
+        width: 38vw;
+    }
+
+}
+/* ========================================
+   FINAL FOOTER
+   血の線の先に現れる赤い世界
+======================================== */
+
+.final-footer {
+    position: relative;
+
+    width: 100%;
+    min-height: 100svh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: var(--color-accent);
+    color: var(--color-text-light);
+
+    overflow: hidden;
+}
+
+/* フッター内の文字 */
+.final-footer-content {
+    width: 100%;
+    padding: 100px 8%;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+/* 小さな英語 */
+.final-footer-label {
+    margin: 0 0 50px;
+
+    font-size: 11px;
+    letter-spacing: 0.35em;
+}
+
+/* 走馬灯 */
+.final-footer-title {
+    margin: 0;
+
+    font-size: clamp(48px, 9vw, 120px);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+}
+
+/* 最後の文章 */
+.final-footer-text {
+    margin: 50px 0 0;
+
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    line-height: 2.5;
+}
+
+/* THE END. */
+.final-footer-end {
+    margin: 100px 0 0;
+
+    font-size: 10px;
+    letter-spacing: 0.4em;
+}
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 767px) {
+
+    .final-footer-content {
+        padding: 80px 8%;
+    }
+
+    .final-footer-label {
+        margin-bottom: 40px;
+        font-size: 9px;
+    }
+
+    .final-footer-title {
+        font-size: 48px;
+    }
+
+    .final-footer-text {
+        margin-top: 35px;
+        font-size: 11px;
+    }
+
+    .final-footer-end {
+        margin-top: 80px;
+    }
+}
+/* 血の線が伸び終わるまでフッターの場所もなくす */
+.final-footer {
+    display: none;
+    opacity: 0;
+}
+
+/* 血の線が伸び終わったらフッターを出す */
+.final-footer.is-ready {
+    display: flex;
+    opacity: 1;
+}
+/* ========================================
+   FINAL FOOTER DESIGN
+======================================== */
+
+.final-footer {
+    background-color: var(--color-accent);
+    color: var(--color-white);
+}
+
+.final-footer-inner {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 45px 5% 30px;
+    box-sizing: border-box;
+}
+
+/* ========================================
+   上部
+======================================== */
+
+.footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-size: 11px;
+    letter-spacing: 0.2em;
+}
+
+/* ========================================
+   メインタイトル
+======================================== */
+
+.footer-main {
+    min-height: 65svh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.footer-big-title {
+    margin: 0;
+
+    font-size: clamp(80px, 17vw, 260px);
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+}
+
+.footer-subtitle {
+    margin: 25px 0 0;
+
+    font-size: 11px;
+    letter-spacing: 0.35em;
+}
+
+/* ========================================
+   ナビゲーション
+======================================== */
+
+.footer-navigation {
+    border-top: 1px solid currentColor;
+}
+
+.footer-heading {
+    margin: 30px 0 45px;
+
+    font-size: 11px;
+    letter-spacing: 0.3em;
+}
+
+.footer-link {
+    display: grid;
+    grid-template-columns: 70px 1fr 40px;
+    align-items: center;
+
+    padding: 28px 0;
+
+    border-bottom: 1px solid currentColor;
+
+    color: inherit;
+    text-decoration: none;
+
+    transition: padding 0.4s ease;
+}
+
+.footer-link-number {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+}
+
+.footer-link-name {
+    font-size: clamp(30px, 5vw, 75px);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+}
+
+.footer-link-arrow {
+    font-size: 25px;
+    text-align: right;
+
+    transition: transform 0.4s ease;
+}
+
+/* ホバー */
+@media (hover: hover) {
+
+    .footer-link:hover {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .footer-link:hover .footer-link-arrow {
+        transform: translate(5px, -5px);
+    }
+
+}
+
+/* ========================================
+   最下部
+======================================== */
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-top: 35px;
+
+    font-size: 10px;
+    letter-spacing: 0.2em;
+}
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 767px) {
+
+    .final-footer-inner {
+        padding: 25px 6% 25px;
+    }
+
+    .footer-top {
+        font-size: 9px;
+    }
+
+    .footer-main {
+        min-height: 55svh;
+    }
+
+    .footer-big-title {
+        font-size: clamp(65px, 18vw, 110px);
+        letter-spacing: 0.05em;
+    }
+
+    .footer-subtitle {
+        margin-top: 20px;
+
+        font-size: 9px;
+        letter-spacing: 0.15em;
+    }
+
+    .footer-heading {
+        margin: 25px 0 30px;
+        font-size: 10px;
+    }
+
+    .footer-link {
+        grid-template-columns: 45px 1fr 30px;
+        padding: 25px 0;
+    }
+
+    .footer-link-name {
+        font-size: 32px;
+    }
+
+    .footer-link-arrow {
+        font-size: 20px;
+    }
+
+    .footer-bottom {
+        padding-top: 30px;
+        font-size: 9px;
+    }
+
+}
